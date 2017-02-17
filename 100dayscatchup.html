@@ -9,16 +9,15 @@
 <script language="javascript" type="text/javascript">
 $(document).ready(function() {
 	/* Your start date
-	Note: You must create date object one month earlier than desired date 
-	i.e. My start date was Jan 3 2017; I used Date('2016','12','03') */
-	var startDate = new Date('2016','12','03').toString().substring(3, 15);
+	Note: You must create date object one month and one day earlier than desired date 
+	i.e. My start date was Jan 3 2017; I used Date('2016','12','02') */
+	var startDate = new Date('2016','12','02').toString().substring(3, 15);
 
-	document.write("### Day 1" + ": " + startDate + "<br><br>** Description:** <br><br> **Links:** <br><br>");
-	for (var i = 1; i < 100; i++) {
+	for (var i = 1; i <= 100; i++) {
 		var newdate = new Date(startDate);
 		newdate.setDate(newdate.getDate() + i);
 		var nd = new Date(newdate).toString().substring(3, 15);
-		document.write("### Day " + (i+1) + ": " + nd + "<br><br>** Description:** <br><br> **Links:** <br><br>");
+		document.write("### Day " + i + ": " + nd + "<br><br>** Description:** <br><br> **Links:** <br><br>");
 	}
 });
 </script>
