@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+	/* Your start date
+	Note: You must create date object one month earlier than desired date 
+	i.e. My start date was Jan 3 2017; I used Date('2016','12','03') */
+	var startDate = new Date('2016','12','03').toString().substring(3, 15);
+
+	document.write("### Day 1" + ": " + startDate + "<br><br>** Description:** <br><br> **Links:** <br><br>");
+	for (var i = 1; i < 100; i++) {
+		var newdate = new Date(startDate);
+		newdate.setDate(newdate.getDate() + i);
+		var nd = new Date(newdate).toString().substring(3, 15);
+		document.write("### Day " + (i+1) + ": " + nd + "<br><br>** Description:** <br><br> **Links:** <br><br>");
+	}
+});
+</script>
+</body>
+</html>
