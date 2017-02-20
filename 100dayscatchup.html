@@ -3,11 +3,27 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<style>
-.form {
-    padding: 20px;
-}
-</style>
+    <style>
+    body {
+        font-family: 'Helvetica';
+        font-size: 15px;
+        font-weight: 700;
+    }
+    .form {
+        padding: 10px;
+        text-align: center;
+        font-size: 18px;
+    }
+    input {
+        margin: 0 auto;
+        border-radius: 10px;
+        color: white;
+        background: #0e4d56;
+        padding: 8px;
+        margin: 5px;
+        cursor: pointer;
+    }
+    </style>
 </head>
 <body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -15,70 +31,67 @@
 <script language="javascript" type="text/javascript">
 $(document).ready(function() {
 
-    /* Your start date
+    /* Change startDate to YOUR start date
     Note: You must create date object one month and one day earlier than desired date 
-    i.e. My start date was Jan 3 2017; I used Date('2016','12','02') */
-
+    i.e. My start date was January 3rd, 2017 (the challenge's announced start date), so I used Date('2016','12','02') */
     var startDate = new Date('2016','12','02').toString().substring(3, 15);
     var changed;
     var dates = [];
     var tweets = [];
 
-    // Get file
+    // Get "<username> - tweets.csv" file downloaded from www.tweetdownload.net
     $("#csv-file").change(handleFileSelect);
-     // Parse it
-     function handleFileSelect(evt) {
+    // Parse it using Papa Parse
+    // http://papaparse.com/docs
+    function handleFileSelect(evt) {
         var file = evt.target.files[0];
         Papa.parse(file, {
-          //header: true,
-          dynamicTyping: true,
-          complete: function(results) {
+        dynamicTyping: true,
+        // Execute only if parsing is complete
+        complete: function(results) {
             for (var i = 0; i < 50; i++) {
-                // Check if 100DaysOfCode hashtag is present
+                // Check if 100DaysOfCode hashtag is present in each tweet
                 if (results.data[i][2].includes("#100DaysOfCode")) {
                     var tweetDate = results.data[i][0];
                     var tweet1 = results.data[i][2];
                     // Remove the hashtag to prevent affecting markdown
                     var tweet = tweet1.replace("#","");
-                    // Create arrays of relevant days tweeted (dates) and tweets (tweets)
+                        // Create arrays of relevant days tweeted (dates) and tweets (tweets)
                     dates.push(tweetDate);
                     tweets.push(tweet);
                 }
             }
-
-                for (var i = 1; i <= 100; i++) {
-
-                    var newdate = new Date(startDate);
-                    newdate.setDate(newdate.getDate() + i);
-                    var nd = new Date(newdate).toString().substring(3, 15);
-                    // Creates header for each day of 100 days
-                    $('body').append("### Day " + i + ": " + nd + "<br><br> **Description: **<br><br>");
-                    
-                    // Converts date to format from CSV file
-                    function convertDate(inputFormat) {
-                        function pad(s) { return (s < 10) ? '0' + s : s; }
-                        var d = new Date(inputFormat);
-                        changed = [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+            // Prints out heading for each day of your 100 days
+            for (var i = 1; i <= 100; i++) {
+                var newdate = new Date(startDate);
+                newdate.setDate(newdate.getDate() + i);
+                var nd = new Date(newdate).toString().substring(3, 15);
                         
-                        // If converted date matches date from dates array,
-                        // Add related tweet to page
-                        for (var j = 0; j < dates.length; j++) {
-                                if (dates[j] === changed) {
-                                    //console.log(tweets[j]);
-                                    $('body').append(tweets[j] + "<br><br>");
-                                }
+                $('body').append("### Day " + i + ": " + nd + "<br><br> **Description: **<br><br>");
+                        
+                // Converts date of each tweet to same format used in CSV file (dd-mm-yyyy)
+                function convertDate(tweetFormat) {
+                    function pad(s) { return (s < 10) ? '0' + s : s; }
+                    var d = new Date(tweetFormat);
+                    changed = [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+                            
+                    // If converted date matches date from dates array,
+                    // add associated tweet to page
+                    for (var j = 0; j < dates.length; j++) {
+                        if (dates[j] === changed) {
+                            $('body').append(tweets[j] + "<br><br>");
                         }
                     }
-                    convertDate(nd);
                 }
-          }
-        });
-      }	
+                convertDate(nd);
+            }
+        }   // End of completed parse function
+        }); // End of Papa.parse function
+    }	
 });
-
 </script>
 <div class="form">
-<input type="file" id="csv-file" name="files"/>
+    <input type="file" id="csv-file" name="files"/>
 </div>
 </body>
 </html>
