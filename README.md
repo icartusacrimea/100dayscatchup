@@ -1,5 +1,5 @@
 # 100dayscatchup
-for when you've tweeted about but neglected to log #100DaysofCode days on your GitHub repo
+for when you've tweeted about but neglected to log #100DaysofCode days in your GitHub repo
 
 **Instructions:**<br><br>
 1. Head to https://www.tweetdownload.net/ and download all of your tweets into a CSV file.<br><br>
