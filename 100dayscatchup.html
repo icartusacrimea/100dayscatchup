@@ -54,8 +54,8 @@ $(document).ready(function() {
                 if (results.data[i][2].includes("#100DaysOfCode")) {
                     var tweetDate = results.data[i][0];
                     var tweet1 = results.data[i][2];
-                    // Remove the hashtag to prevent affecting markdown
-                    var tweet = tweet1.replace("#","");
+                    // Remove all hashtags to avoid unintentionally affecting markdown
+                    var tweet = tweet1.replace(/#/g, "");
                         // Create arrays of relevant days tweeted (dates) and tweets (tweets)
                     dates.push(tweetDate);
                     tweets.push(tweet);
